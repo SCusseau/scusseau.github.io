@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Null C# isn't supported by SQL
+title: Enhancing SQL Queries in C# with ``nameof`` for Improved Safety and Maintainability
 ---
 
 
