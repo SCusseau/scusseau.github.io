@@ -4,8 +4,9 @@ title: Null C# isn't supported by SQL
 ---
 
 
-> Summary 
-> Using `{nameof(ClassName.Prop)}` enhances code safety, maintainability, and clarity.
+> Summary
+>
+> Using `{nameof(ClassName.Prop)}` in SQL querries written in C# enhances code safety, maintainability, and clarity.
 
 
 Example 
