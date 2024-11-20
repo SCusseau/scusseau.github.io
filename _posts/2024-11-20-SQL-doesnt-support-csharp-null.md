@@ -3,9 +3,10 @@ layout: post
 title: Null C# isn't supported by SQL
 ---
 
-> [!Summary]
+
+> Summary
 > - `rate.P1 ?? (object)DBNull.Value` ensures that if `P1` is `null`, the database will receive `DBNull.Value`, which represents a `null` in SQL.
->- If `P1` has a value, that value is passed to the SQL query instead.
+> - If `P1` has a value, that value is passed to the SQL query instead.
 
 
 ```c#
