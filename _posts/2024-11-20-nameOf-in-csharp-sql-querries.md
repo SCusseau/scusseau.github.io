@@ -22,7 +22,7 @@ LEFT JOIN ecapex_exchange_rates y ON d.code = y.code AND y.year = @year
 ```
 
 With this call : 
-```c#
+```csharp
 await connection.QueryAsync<RequestExchangeRatesDto>(query, new { Year = year })
 ```
 
