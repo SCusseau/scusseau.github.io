@@ -42,11 +42,13 @@ Goal : transferring all data from a SQL Server table to a PostgreSQL table while
 INSERT INTO my_table (column1, column2, column3) VALUES (@value1, @value2, @value3);
 ```
 - Option 2 : Using `COPY` Command for Bulk Inserts
-```c#
+```SQL
 COPY my_table (column1, column2, column3) FROM STDIN (FORMAT BINARY)
 ```
 
-#### 1. **Define the DTO**
+#### Example
+
+Using this DTO
 
 ```csharp
 public class MyDto
@@ -57,7 +59,7 @@ public class MyDto
 }
 ```
 
-#### 2. **Create the Bulk Insert Method**
+Create the Bulk Insert Method
 
 ```csharp
 using Npgsql;
@@ -89,7 +91,7 @@ public async Task BulkInsertDtoListAsync(List<MyDto> dtoList, string connectionS
 }
 ```
 
-#### 3. **How the `COPY` Command Works**
+*Note:*
 
 - **`BeginBinaryImport`**: Initializes the `COPY` command in binary mode.
 - **`StartRowAsync`**: Indicates the beginning of a new row.
