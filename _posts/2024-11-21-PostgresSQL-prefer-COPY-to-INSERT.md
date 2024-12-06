@@ -34,7 +34,7 @@ Goal : transferring all data from a SQL Server table to a PostgreSQL table while
 
 1. **Data Retrieval from SQL Server**:
     - Execute a `SELECT` statement on the source SQL Server table to fetch all records.
-    - Map the retrieved data to a `List<MyDTO>`, where `MyDTO` 
+    - Map the retrieved data to a `List<MyDTO>`
 2. **Data Insertion into PostgreSQL** → Two options 
 
 - Option 1 : Using Batch Inserts 
