@@ -96,3 +96,34 @@ var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30)); // Cancel after
 - **Web APIs**: Passing a `CancellationToken` from an HTTP request to downstream services ensures that if the client disconnects, server-side operations stop.
 - **Background jobs**: In scheduled jobs or long-running tasks, cancellation tokens are used to stop work gracefully during shutdowns or restarts.
 - **Database operations**: Prevent unnecessary long-running queries or stale data fetches by cancelling requests when no longer needed.
+
+### **Key Learnings and Feedback**
+
+After sharing this article with a colleague, he shared the following learnings from his past experiences:
+
+1. **Monitoring and False Positives**:
+
+**Cancellation requests** should be handled carefully in monitoring systems. If not managed properly, cancelled tasks can be flagged as **errors** in dashboards, leading to **false positives**. These cancellations should be treated as expected behaviour and not as failures to avoid cluttering monitoring tools with unnecessary alerts.
+
+**Solution**: Add specific logic to distinguish between a **normal cancellation** (e.g., due to user request or timeout) and an actual error. You can log cancellations differently to prevent them from appearing as critical issues in monitoring dashboards.
+
+2. **Handling Cancellation in Commands**:
+
+**Cancellation with commands** can leave the system in an **inconsistent state**, especially when multiple synchronous calls are made to other services. If the cancellation happens in the middle of a process, it might interrupt state changes or cause side effects, resulting in data corruption or incomplete operations.
+
+```csharp
+// Step 1: Process the payment
+await paymentService.Pay(amount, cancellationToken); // Payment is successful
+
+// Step 2: Simulate cancellation happening between payment and shipping
+if (cancellationToken.IsCancellationRequested) 
+{
+    Console.WriteLine("Cancellation requested after payment, but before shipping.");
+    return; // Exit without shipping the product
+}
+
+// Step 3: Ship the product (this never gets executed if cancellation happens in between)
+await shippingService.Ship(product, cancellationToken);
+```
+
+**Solution**: Ensure that your system is designed to **roll back changes** or maintain consistency when a cancellation occurs. Using **transactional** or **compensating actions** can help restore the system to a valid state after a cancellation.
